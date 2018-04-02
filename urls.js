@@ -51,7 +51,7 @@
     } else {
         root.urls = factory();
     }
-} (this, function () {
+} (this, function (isCurrentHref) {
     'use strict';
 
     // extend object
@@ -161,8 +161,14 @@
             };
 
             return extend(true, dest, src).toString();
-        },
+        }
     };
-
-    return urls;
+   
+   // 如果为空则直接返回当前url
+   if (!isCurrentHref) {
+      var url = window.location.href;
+      return urls.parse(url).query;
+   } else {
+      return urls;
+   }
 }));
